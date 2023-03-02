@@ -40,3 +40,12 @@
 .read-the-docs {
   color: #888;
 }
+
+.itemT{
+animation: entrada 2s;
+}
+
+@keyframes entrada {
+  0% { opacity: .1; }
+  100% { opacity: 1;}
+}

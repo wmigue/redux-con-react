@@ -1,15 +1,15 @@
 
 const initialState = {
   entities: [],
-  filtrados: 'todas',
+  filtrados: 'todas', //por default, se filtran todas las tareas
 
 }
 
-export const acciones = (state = initialState, action) => {
+export const tareasStore = (state = initialState, action) => {
   switch (action.type) {
     case "todo/add": {
       return {
-        ...state, entities: state.entities.concat({ ...action.payload })
+        ...state, entities: [ action.payload, ...state.entities ]
       }
     }
     case "todo/checkar": {
@@ -43,9 +43,7 @@ export const acciones = (state = initialState, action) => {
 }
 
 
-
-
-export const seleccionarTodos = (estado) => {
+export const selector = (estado) => {
   const { entities, filtrados } = estado
   if (filtrados === 'completadas') {
     return entities.filter(x => x.completada)

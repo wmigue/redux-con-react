@@ -1,13 +1,15 @@
+import { Container, InputGroup, Button, } from 'react-bootstrap'
+import './App.css'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { seleccionarTodos } from './reducers/reducer1'
-import { Container, InputGroup, Form, Col, Button, Card, Row } from 'react-bootstrap'
-import './App.css'
+import { selector } from './reducers/tareas.jsx'
+import { Item } from './components/item'
+
 
 function App() {
   const [temporal, setTemporal] = useState("")
   const despachar = useDispatch()
-  const estado = useSelector(seleccionarTodos)
+  const estado = useSelector(selector) //el param estado lo toma del store, define que se filtra.
 
   const Add = (e) => {
     e.preventDefault()
@@ -19,47 +21,20 @@ function App() {
     }
   }
 
-  const Item = ({ tarea }) => {
-    const despachar = useDispatch()
-    return (
-      <div style={{ border: 'solid 1px white', marginBottom:'5px', borderRadius :'5px'}}>
-        Estado:
-        <b style={{ color: tarea.completada ? 'green' : 'red' }}>
-          {tarea.completada ? "COMPLETADA ✅" : "REQUERIDA ❌"}
-        </b>
-        <Col
-          style={{
-            borderColor: 'red',
-            textTransform: 'uppercase',
-            listStyle: 'none', fontSize: '16px',
-          }}>
-          {tarea.valor}
-        </Col>
-        <button onClick={() => despachar({ type: 'todo/eliminar', payload: tarea })}>eliminar </button>
-        <button onClick={() => despachar({ type: 'todo/checkar', payload: tarea })}>✅❌ </button>
-      </div>
-
-    )
-  }
-
-
-
   return (
     <Container gap={3} class="m-5 mb-5" >
       <InputGroup className="mt-5 mb-5">
-        <input onChange={(e) => setTemporal(e.target.value)}/>
+        <input placeholder='escribe una tarea' value={temporal} onChange={(e) => setTemporal(e.target.value)} />
         <Button
           variant="outline-primary"
           id="button-addon2"
-          onClick={Add}>AGREGAR TAREA
+          onClick={Add}>AGREGAR
         </Button>
       </InputGroup>
-
 
       <ul>
         {estado.map(x => <Item key={x.id} tarea={x} />)}
       </ul>
-
 
       <Container className="mt-5 text-center" >
         <Button
